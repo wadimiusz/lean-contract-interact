@@ -41,7 +41,7 @@ For depositing a bounty on a theorem, you need the `declareBounty` function, and
 
 ## Depositing bounties
 
-The `declare_bounty` function requires one argument named `theorem`.
+The `declareBounty` function requires one argument named `theorem`.
 Here's an example:
 
 ```commandline
