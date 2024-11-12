@@ -1,6 +1,8 @@
 import json
 from argparse import ArgumentParser
 import getpass
+from email.policy import default
+
 from web3 import Web3
 
 
@@ -17,16 +19,20 @@ def main():
     parser.add_argument("--function-kwargs", "-fk", required=False, default=None,
                         help="A json dictionary with function keyword arguments."
                              "If not specified, function will be called without keyword arguments.")
-    parser.add_argument("--value", "-v", type=float, default=None,
+    parser.add_argument("--value", "-v", type=float, default=None, required=False,
                         help="If you call a payable function, specify this argument to pass this much Ether "
                              "(i.e. 0.01 means 0.01 Ether). Ignore this value for functions that are not payable.")
+    parser.add_argument("--gas-multiplier", "-g", type=float, default=1.0, required=False,
+                        help="You can specify this value to pay higher (or lower) transaction fees and ensure your "
+                             "transaction is included faster (or slower). E.g. --gas-multiplier=2 will make gas fees "
+                             "twice as high.")
     args = parser.parse_args()
 
     with open(args.ABI_file) as f:
         contract_ABI = json.load(f)
 
     if args.function_args is None:
-        function_args = dict()
+        function_args = list()
     else:
         function_args = json.loads(args.function_args)
 
@@ -42,17 +48,33 @@ def main():
     contract = web3.eth.contract(address=args.contract_address, abi=contract_ABI)
     account = web3.eth.account.from_key(private_key)
 
+    function = getattr(contract.functions, args.function_name)(*function_args, **function_kwargs)
+
+    gas_estimation_kwargs = {
+        "from": account.address,
+    }
+
+    if args.value is not None:
+        gas_estimation_kwargs["value"] = web3.to_wei(args.value, 'ether')
+
+    estimated_gas = function.estimate_gas(gas_estimation_kwargs)
+
+    # Get the current gas price from the network
+    current_gas_price = web3.eth.gas_price
+
+    print(f"Estimated gas (ETH): {web3.from_wei(int(estimated_gas * current_gas_price * args.gas_multiplier), 'ether')}")
+
     transaction_kwargs = {
         'nonce': web3.eth.get_transaction_count(account.address),
-        'gasPrice': web3.eth.gas_price,
+        'gas': estimated_gas,
+        'gasPrice': int(current_gas_price * args.gas_multiplier),
         'from': account.address,
     }
 
     if args.value is not None:
         transaction_kwargs["value"] = web3.to_wei(args.value, 'ether')
 
-    function = getattr(contract.functions, args.function_name)
-    transaction = function(*function_args, **function_kwargs).build_transaction(transaction_kwargs)
+    transaction = function.build_transaction(transaction_kwargs)
     signed_transaction = account.sign_transaction(transaction)
     transaction_hash = web3.eth.send_raw_transaction(signed_transaction.raw_transaction)
     print(f"Transaction hash: {transaction_hash.hex()}. "
