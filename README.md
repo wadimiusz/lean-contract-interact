@@ -20,17 +20,21 @@ python3 -m pip install -r requirements.txt
 
 # Preparations
 
-You will need an Infura account to interact with the smart contract. (Infura allows you to interact with blockchain without setting up your own nodes.) 
+You will need an Metamask Developer account to interact with the smart contract. (It allows you to interact with blockchain without setting up your own nodes.) 
 
-So if you don't have an Infura account yet, go to https://app.infura.io/register and sign up.
-Then go to https://app.infura.io and copy an API key. It will be required by the scripts.
+So if you don't have an account yet, go to https://developer.metamask.io/register and sign up.
+Then go to https://developer.metamask.io and copy an API key. It will be required by the scripts.
 
 You will also need an Ethereum account on Sepolia (play money; not on mainnet!). You can do this by installing MetaMask at https://metamask.io and setting up an account, or in any other way you prefer. The script will require your private key. In Metamask, you can get it from the "Account details" button.
 
 The scripts don't store your private key or send it anywhere, they just use it to locally sign a transaction. You can read the script and make sure.
 
-You can get some play money (Sepolia Ether) to your account by going to Sepolia faucets, for example here: https://faucets.chain.link/
-There are other faucets which you can look up and use. You will also need this for interacting with the contract to deposit bounties and because transactions require so-called "gas fees".
+You need to get some play money (Sepolia Ether) to interact the smart contract. You can do this by:
+1. Pinging me on the Lean Zulip so that I wire you some.
+2. Or going to any Sepolia faucets, for example here is a nice list: https://faucet.triangleplatform.com/ethereum/sepolia
+For example:
+- https://www.alchemy.com/faucets/ethereum-sepolia is convenient, but requires a free account.
+- https://faucet.triangleplatform.com/ethereum/sepolia doesn't require accounts, but it only wires a little.
 
 # Usage
 
