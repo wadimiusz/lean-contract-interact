@@ -32,7 +32,8 @@ The scripts don't store your private key or send it anywhere, they just use it t
 You need to get some play money (Sepolia Ether) to interact the smart contract. You can do this by:
 1. Pinging me on the Lean Zulip so that I wire you some.
 2. Or going to any Sepolia faucets, for example here is a nice list: https://faucet.triangleplatform.com/ethereum/sepolia
-For example:
+
+Some faucets you might use:
 - https://www.alchemy.com/faucets/ethereum-sepolia is convenient, but requires a free account.
 - https://faucet.triangleplatform.com/ethereum/sepolia doesn't require accounts, but it only wires a little.
 
