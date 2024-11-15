@@ -49,7 +49,7 @@ The `declareBounty` function requires one argument named `theorem`.
 Here's an example:
 
 ```commandline
-python3 call_transaction.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name declareBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a"}' --value 0.01
+python3 call_transaction.py --metamask-developer-key <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name declareBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a"}' --value 0.01
 ```
 
 Replace the `theorem` in `--function-kwargs` with any theorem you like.
@@ -62,7 +62,7 @@ The `requestBounty` function requires two arguments: `theorem` and `proof`. It w
 You can call it like this:
 
 ```commandline
-python3 call_transaction.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name requestBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a", "proof": "by induction a with | zero => rw [Nat.zero_add, Nat.add_zero] | succ a ih => rw [Nat.succ_add, ih, Nat.add_succ]"}'
+python3 call_transaction.py --metamask-developer-key <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name requestBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a", "proof": "by induction a with | zero => rw [Nat.zero_add, Nat.add_zero] | succ a ih => rw [Nat.succ_add, ih, Nat.add_succ]"}'
 ```
 
 If the offchain oracle confirms that the proof is valid, your account will receive all bounties declared on this theorem so far.
@@ -75,7 +75,7 @@ It does not change the state of the network, so we don't need an account or any 
 Here's how you would call it:
 
 ```commandline
-python3 call_view_function.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name theoremBounties --function-args '["(a b : Nat) : a + b = b + a"]'
+python3 call_view_function.py --metamask-developer-key <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name theoremBounties --function-args '["(a b : Nat) : a + b = b + a"]'
 ```
 
 (Replace the actual theorem with whatever you like)

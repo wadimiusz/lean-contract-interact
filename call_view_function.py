@@ -6,7 +6,7 @@ from web3 import Web3
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("--infura-project-id", "-i", required=True)
+    parser.add_argument("--metamask-developer-key", "-i", required=True)
     parser.add_argument("--contract-address", "-c", required=True)
     parser.add_argument("--ABI-file", "-a", required=True)
     parser.add_argument("--function-name", "-fn", required=True, help="Name of the function, "
@@ -32,7 +32,7 @@ def main():
     else:
         function_kwargs = json.loads(args.function_kwargs)
 
-    web3 = Web3(Web3.HTTPProvider(f'https://sepolia.infura.io/v3/{args.infura_project_id}'))
+    web3 = Web3(Web3.HTTPProvider(f'https://sepolia.infura.io/v3/{args.metamask_developer_key}'))
     assert web3.is_connected()
 
     contract = web3.eth.contract(address=args.contract_address, abi=contract_ABI)
