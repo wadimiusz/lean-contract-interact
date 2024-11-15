@@ -34,7 +34,7 @@ There are other faucets which you can look up and use. You will also need this f
 
 # Usage
 
-For calling most smart contract functions (except "view functions" - I'll explain later), you will use the `call_write_function.py` script.
+For calling most smart contract functions (except "view functions" - I'll explain later), you will use the `call_transaction.py` script.
 It will prompt you to enter your private key. The key will be stored into RAM, but not written or sent anywhere.
 
 For depositing a bounty on a theorem, you need the `declareBounty` function, and for claiming a bounty, you'll need the `requestBounty` function.
@@ -45,7 +45,7 @@ The `declareBounty` function requires one argument named `theorem`.
 Here's an example:
 
 ```commandline
-python3 call_write_function.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name declareBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a"}' --value 0.01
+python3 call_transaction.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name declareBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a"}' --value 0.01
 ```
 
 Replace the `theorem` in `--function-kwargs` with any theorem you like.
@@ -58,7 +58,7 @@ The `requestBounty` function requires two arguments: `theorem` and `proof`. It w
 You can call it like this:
 
 ```commandline
-python3 call_write_function.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name requestBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a", "proof": "by induction a with | zero => rw [Nat.zero_add, Nat.add_zero] | succ a ih => rw [Nat.succ_add, ih, Nat.add_succ]"}'
+python3 call_transaction.py --infura-project-id <YOUR_INFURA_KEY> --contract-address 0xAFb8B0f654cC497FDD7901956fE37C7f927ecfDF --ABI-file ABI.json --function-name requestBounty --function-kwargs '{"theorem": "(a b : Nat) : a + b = b + a", "proof": "by induction a with | zero => rw [Nat.zero_add, Nat.add_zero] | succ a ih => rw [Nat.succ_add, ih, Nat.add_succ]"}'
 ```
 
 If the offchain oracle confirms that the proof is valid, your account will receive all bounties declared on this theorem so far.
